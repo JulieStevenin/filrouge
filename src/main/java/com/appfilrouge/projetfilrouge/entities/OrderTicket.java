@@ -1,8 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
-
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -14,6 +12,7 @@ public class OrderTicket {
     @OneToMany(mappedBy = "orderTicket", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
     private Float totalPrice;
+    private boolean validated;
 
     @ManyToOne
     @JoinColumn(name = "buyer_id")
@@ -22,9 +21,10 @@ public class OrderTicket {
     public OrderTicket() {
     }
 
-    public OrderTicket(List<Ticket> tickets, Float totalPrice, Buyer buyer) {
+    public OrderTicket(List<Ticket> tickets, Float totalPrice, boolean validated, Buyer buyer) {
         this.tickets = tickets;
         this.totalPrice = totalPrice;
+        this.validated = validated;
         this.buyer = buyer;
     }
 
@@ -50,6 +50,14 @@ public class OrderTicket {
 
     public void setTotalPrice(Float totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
     }
 
     public Buyer getBuyer() {
