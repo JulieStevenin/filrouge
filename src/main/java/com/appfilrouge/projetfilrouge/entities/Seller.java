@@ -1,8 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -10,30 +8,19 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonBackReference
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Ad> ads;
 
-    private String description;
-
     public Seller() {
     }
 
-    public Seller(User user, List<Ad> ads, String description) {
+    public Seller(User user, List<Ad> ads) {
         this.user = user;
         this.ads = ads;
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Long getId() {

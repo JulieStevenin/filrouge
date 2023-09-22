@@ -11,14 +11,11 @@ public class OrderTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String refOrder;
     @OneToMany(mappedBy = "orderTicket", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
     private Float totalPrice;
     private LocalDate orderDate;
     private boolean validated;
-
 
     @ManyToOne
     @JoinColumn(name = "buyer_id")
@@ -31,8 +28,7 @@ public class OrderTicket {
     public OrderTicket() {
     }
 
-    public OrderTicket(String refOrder, List<Ticket> tickets, Float totalPrice, LocalDate orderDate, boolean validated, Buyer buyer, Seller seller) {
-        this.refOrder = refOrder;
+    public OrderTicket(List<Ticket> tickets, Float totalPrice, LocalDate orderDate, boolean validated, Buyer buyer, Seller seller) {
         this.tickets = tickets;
         this.totalPrice = totalPrice;
         this.orderDate = orderDate;
@@ -47,14 +43,6 @@ public class OrderTicket {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getRefOrder() {
-        return refOrder;
-    }
-
-    public void setRefOrder(String refOrder) {
-        this.refOrder = refOrder;
     }
 
     public List<Ticket> getTickets() {
