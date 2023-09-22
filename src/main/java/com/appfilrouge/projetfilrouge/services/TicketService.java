@@ -32,20 +32,14 @@ public class TicketService {
 
         if (optionalTicket.isPresent()) {
             Ticket existingTicket = optionalTicket.get();
-            // Mettez à jour les champs du ticket existant avec les valeurs de ticketDTO.
+
             existingTicket.setDescription(ticketDTO.getDescription());
             existingTicket.setTicketStatus(ticketDTO.isTicketStatus());
             existingTicket.setPrice(ticketDTO.getPrice());
 
-            // Récupérez la commande de ticket à partir de l'ID de la commande de ticket et définissez la relation.
-           /* OrderTicket orderTicket = orderTicketRepository.findById(ticketDTO.getOrderTicketId()).orElse(null);
-            existingTicket.setOrderTicket(orderTicket);*/
-
-            // Récupérez l'annonce à partir de l'ID de l'annonce et définissez la relation.
             Ad ad = adRepository.findById(ticketDTO.getAdId()).orElse(null);
             existingTicket.setAd(ad);
 
-            // Enregistrez les modifications dans la base de données.
             Ticket updatedTicket = ticketRepository.save(existingTicket);
 
             return convertToDTO(updatedTicket);
@@ -83,13 +77,12 @@ public class TicketService {
         return tickets.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    // Méthode de conversion vers l'entité Ticket
     private Ticket convertToEntity(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
         ticket.setDescription(ticketDTO.getDescription());
         ticket.setTicketStatus(ticketDTO.isTicketStatus());
         ticket.setPrice(ticketDTO.getPrice());
-        // Vous pouvez également convertir d'autres champs ici.
+
 
         return ticket;
     }
@@ -124,44 +117,11 @@ public class TicketService {
 
         Ad ad = adRepository.findById(adId)
                 .orElseThrow(() -> new EntityNotFoundException("Annonce non trouvée avec l'ID : " + adId));
-
         ticket.setAd(ad);
-
-        ad.setOnlineAdStatus(true);
-
         adRepository.save(ad);
         ticketRepository.save(ticket);
     }
 
-
-    public void removeTicketFromAd(Long adId, Long ticketId) {
-        Ad ad = adRepository.findById(adId)
-                .orElseThrow(() -> new EntityNotFoundException("Annonce non trouvée avec l'ID : " + adId));
-
-
-        ticketRepository.deleteById(ticketId);
-
-        updateAdOnlineStatus(ad);
-    }
-
-    private void updateAdOnlineStatus(Ad ad) {
-
-        int ticketCount = ad.getTickets().size();
-
-        ad.setOnlineAdStatus(ticketCount > 0);
-        adRepository.save(ad);
-    }
-
-    public void addTicketToAd(Long adId, Ticket ticket) {
-        Ad ad = adRepository.findById(adId)
-                .orElseThrow(() -> new EntityNotFoundException("Annonce non trouvée avec l'ID : " + adId));
-
-
-        ticket.setAd(ad);
-        ticketRepository.save(ticket);
-
-        updateAdOnlineStatus(ad);
-    }
 
 
 }

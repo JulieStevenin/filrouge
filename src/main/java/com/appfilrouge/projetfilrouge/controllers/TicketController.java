@@ -30,7 +30,6 @@ public class TicketController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<TicketDTO> updateTicket(@PathVariable Long id, @RequestBody TicketDTO ticketDTO) {
-        // Assurez-vous que le ticket avec l'ID donné existe avant de le mettre à jour.
         if (!ticketService.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -41,7 +40,6 @@ public class TicketController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
-        // Assurez-vous que le ticket avec l'ID donné existe avant de le supprimer.
         if (!ticketService.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -2,16 +2,18 @@ package com.appfilrouge.projetfilrouge.controllers;
 
 import com.appfilrouge.projetfilrouge.dto.AdDTO;
 
-import com.appfilrouge.projetfilrouge.repositories.AdAddressRepository;
+import com.appfilrouge.projetfilrouge.entities.Ad;
+
 import com.appfilrouge.projetfilrouge.repositories.SellerRepository;
 import com.appfilrouge.projetfilrouge.services.AdService;
-import com.appfilrouge.projetfilrouge.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -22,17 +24,15 @@ import java.util.List;
 public class AdController {
     @Autowired
     private AdService adService;
-    @Autowired
-    private CategoryService categoryService;
+
 
     @Autowired
     private SellerRepository sellerRepository;
-    @Autowired
-    private AdAddressRepository adAddressRepository;
+
 
     @PostMapping("/new")
     public ResponseEntity<AdDTO> createAd(@RequestBody AdDTO adDTO) {
-        AdDTO createdAd = adService.createAd(adDTO);
+        AdDTO createdAd = adService.createAdd(adDTO);
         return new ResponseEntity<>(createdAd, HttpStatus.CREATED);
     }
 
@@ -49,7 +49,6 @@ public class AdController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAd(@PathVariable Long id) {
-        // Assurez-vous que l'annonce avec l'ID donné existe avant de la supprimer.
         if (!adService.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -62,6 +61,17 @@ public class AdController {
     public ResponseEntity<List<AdDTO>> getAllAds() {
         List<AdDTO> allAds = adService.getAllAds();
         return new ResponseEntity<>(allAds, HttpStatus.OK);
+    }
+
+    @GetMapping("/byName")
+    public ResponseEntity<List<Ad>> findAdsByName(@RequestParam String name) {
+        List<Ad> ads = adService.findAdsByName(name);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+    @GetMapping("/byEventDate")
+    public ResponseEntity<List<Ad>> getAdsByEventDate(@RequestParam("eventDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate eventDate) {
+        List<Ad> ads = adService.findAdsByEventDate(eventDate);
+        return new ResponseEntity<>(ads, HttpStatus.OK);
     }
 }
 
