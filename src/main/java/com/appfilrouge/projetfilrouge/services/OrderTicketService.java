@@ -2,6 +2,7 @@ package com.appfilrouge.projetfilrouge.services;
 
 import com.appfilrouge.projetfilrouge.entities.BillingDetails;
 import com.appfilrouge.projetfilrouge.entities.OrderTicket;
+import com.appfilrouge.projetfilrouge.entities.Ticket;
 import com.appfilrouge.projetfilrouge.entities.User;
 import com.appfilrouge.projetfilrouge.repositories.BillingDetailsRepository;
 import com.appfilrouge.projetfilrouge.repositories.OrderRepository;
@@ -9,8 +10,12 @@ import com.appfilrouge.projetfilrouge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
 
 
 @Service
@@ -44,40 +49,65 @@ public class OrderTicketService {
     }
 
     public boolean validateOrder(Long orderId, User user, String cardCode, String securityCode, String cardDate) {
-        // Récupérez la commande associée à orderId
         OrderTicket order = orderRepository.findById(orderId).orElse(null);
         if (order == null) {
             throw new IllegalArgumentException("Commande introuvable.");
         }
 
-        // Récupérez les détails de facturation associés à l'utilisateur depuis la relation billingDetails
         BillingDetails billingDetails = user.getBillingDetails();
         if (billingDetails == null) {
-            throw new IllegalArgumentException("Détails de facturation introuvables.");
+            throw new IllegalArgumentException("Moyen de paiement non renseigné.");
         }
 
-        // Vérifiez le format des informations de carte de crédit
         if (!isValidCardCode(cardCode) || !isValidSecurityCode(securityCode) || !isValidCardDate(cardDate)) {
-            throw new IllegalArgumentException("Informations de carte de crédit invalides.");
+            throw new IllegalArgumentException("Le code bancaire, le code de sécurité ou la date de validité ne sont pas valides.");
         }
 
-        // Marquez la commande comme validée (vous devrez également mettre à jour les billets pour les marquer comme réservés)
         order.setValidated(true);
         orderRepository.save(order);
 
-        return true; // La commande a été validée avec succès
+        return true;
     }
 
-    // Méthodes pour valider le format des informations de carte de crédit
+    // Les trois booléens suivants permettent de valider ou non les saisies des codes bancaires de l'utilisateur :
     private boolean isValidCardCode(String cardCode) {
-        return cardCode != null && cardCode.matches("\\d{16}"); // Doit contenir 16 chiffres
+        return cardCode != null && cardCode.matches("\\d{16}");
     }
 
     private boolean isValidSecurityCode(String securityCode) {
-        return securityCode != null && securityCode.matches("\\d{3}"); // Doit contenir 3 chiffres
+        return securityCode != null && securityCode.matches("\\d{3}");
     }
 
     private boolean isValidCardDate(String cardDate) {
-        return cardDate != null && cardDate.matches("\\d{2}/\\d{4}"); // Doit être au format mm/aaaa
+        return cardDate != null && cardDate.matches("\\d{2}/\\d{4}");
+    }
+
+    public Map<String, Object> createInvoice(OrderTicket orderTicket) {
+        Map<String, Object> purchaseInvoice = new HashMap<>();
+
+        // Extrayez les informations de la commande
+        List<Ticket> tickets = orderTicket.getTickets();
+        Float totalPrice = orderTicket.getTotalPrice();
+        User buyer = orderTicket.getBuyer().getUser();
+        User seller = orderTicket.getSeller().getUser();
+        LocalDate orderDate = orderTicket.getOrderDate();
+
+        // Créez la liste des détails des billets
+        List<Map<String, Object>> ticketDetails = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            Map<String, Object> ticketDetail = new HashMap<>();
+            ticketDetail.put("description", ticket.getDescription());
+            ticketDetail.put("price", ticket.getPrice());
+            ticketDetails.add(ticketDetail);
+        }
+
+        // Ajoutez toutes les informations à la carte de facturation
+        purchaseInvoice.put("tickets", ticketDetails);
+        purchaseInvoice.put("totalPrice", totalPrice);
+        purchaseInvoice.put("buyerName", buyer.getFname() + " " + buyer.getLname());
+        purchaseInvoice.put("sellerName", seller.getFname() + " " + seller.getLname());
+        purchaseInvoice.put("orderDate", orderDate);
+
+        return purchaseInvoice;
     }
 }
