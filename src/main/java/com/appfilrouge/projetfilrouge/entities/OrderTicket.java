@@ -1,9 +1,20 @@
 package com.appfilrouge.projetfilrouge.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 public class OrderTicket {
@@ -11,52 +22,14 @@ public class OrderTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToMany(mappedBy = "orderTicket", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    private List<Ticket> tickets= new ArrayList<>();
     private Float totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "buyer_id")
     private Buyer buyer;
 
-    public OrderTicket() {
-    }
 
-    public OrderTicket(List<Ticket> tickets, Float totalPrice, Buyer buyer) {
-        this.tickets = tickets;
-        this.totalPrice = totalPrice;
-        this.buyer = buyer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public Float getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Buyer getBuyer() {
-        return buyer;
-    }
-
-    public void setBuyer(Buyer buyer) {
-        this.buyer = buyer;
-    }
 }
