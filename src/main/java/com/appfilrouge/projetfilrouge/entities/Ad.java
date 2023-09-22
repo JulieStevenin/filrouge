@@ -11,20 +11,12 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String document;
-    private Integer numberTickets;
     private LocalDate eventDate;
     private boolean adminAdCheck;
     private String adminComment;
     private boolean onlineAdStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @ManyToOne
-    @JoinColumn(name = "adAddress_id")
-    private AdAddress adAddress;
+    private String category;
+    private String city;
 
     @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
@@ -36,16 +28,14 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(String name, String document, Integer numberTickets, LocalDate eventDate, boolean adminAdCheck, String adminComment, boolean onlineAdStatus, Category category, AdAddress adAddress, List<Ticket> tickets, Seller seller) {
+    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, boolean onlineAdStatus, String category, String city, List<Ticket> tickets, Seller seller) {
         this.name = name;
-        this.document = document;
-        this.numberTickets = numberTickets;
         this.eventDate = eventDate;
         this.adminAdCheck = adminAdCheck;
         this.adminComment = adminComment;
         this.onlineAdStatus = onlineAdStatus;
         this.category = category;
-        this.adAddress = adAddress;
+        this.city = city;
         this.tickets = tickets;
         this.seller = seller;
     }
@@ -64,22 +54,6 @@ public class Ad {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDocument() {
-        return document;
-    }
-
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
-    public Integer getNumberTickets() {
-        return numberTickets;
-    }
-
-    public void setNumberTickets(Integer numberTickets) {
-        this.numberTickets = numberTickets;
     }
 
     public LocalDate getEventDate() {
@@ -114,20 +88,20 @@ public class Ad {
         this.onlineAdStatus = onlineAdStatus;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public AdAddress getAdAddress() {
-        return adAddress;
+    public String getCity() {
+        return city;
     }
 
-    public void setAdAddress(AdAddress adAddress) {
-        this.adAddress = adAddress;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public List<Ticket> getTickets() {

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/order")
 public class OrderTicketController {
@@ -49,14 +49,14 @@ public class OrderTicketController {
         return ResponseEntity.ok(invoice);
     }
 
-    @PostMapping("/{orderId}/validate")
-    public ResponseEntity<String> validateOrder(@PathVariable Long orderId, @RequestBody User user, @RequestBody Map<String, String> paymentInfo) {
+    @PostMapping("/{id}/validation")
+    public ResponseEntity<String> validateOrder(@PathVariable Long id, @RequestBody User user, @RequestBody Map<String, String> paymentInfo) {
         try {
             String cardCode = paymentInfo.get("cardCode");
             String securityCode = paymentInfo.get("securityCode");
             String cardDate = paymentInfo.get("cardDate");
 
-            boolean isValidated = orderTicketService.validateOrder(orderId, user, cardCode, securityCode, cardDate);
+            boolean isValidated = orderTicketService.validateOrder(id, user, cardCode, securityCode, cardDate);
 
             if (isValidated) {
                 return ResponseEntity.ok("La commande a été validée avec succès.");

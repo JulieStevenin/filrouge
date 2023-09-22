@@ -40,16 +40,13 @@ public class OrderTicketService {
     }
 
     public OrderTicket createOrder(OrderTicket orderTicket) {
-        if (orderTicket.getTickets() == null || orderTicket.getTickets().isEmpty()) {
-            throw new IllegalArgumentException("Vous ne pouvez pas passer commande car la liste d'achat est vide.");
-        } else {
             orderRepository.save(orderTicket);
             return orderTicket;
         }
-    }
+        //Passer dans url l'id du ticket. Je récupère le ticket à travers cet id.
 
-    public boolean validateOrder(Long orderId, User user, String cardCode, String securityCode, String cardDate) {
-        OrderTicket order = orderRepository.findById(orderId).orElse(null);
+    public boolean validateOrder(Long Id, User user, String cardCode, String securityCode, String cardDate) {
+        OrderTicket order = orderRepository.findById(Id).orElse(null);
         if (order == null) {
             throw new IllegalArgumentException("Commande introuvable.");
         }
