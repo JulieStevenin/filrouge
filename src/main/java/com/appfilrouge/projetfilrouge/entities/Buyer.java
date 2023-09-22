@@ -1,5 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Buyer {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -17,12 +18,31 @@ public class Buyer {
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     private List<OrderTicket> orderTickets;
 
+    private String description;
+
+    public List<OrderTicket> getOrderTickets() {
+        return orderTickets;
+    }
+
+    public void setOrderTickets(List<OrderTicket> orderTickets) {
+        this.orderTickets = orderTickets;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Buyer() {
     }
 
-    public Buyer(User user, List<OrderTicket> orderTickets) {
+    public Buyer(User user, List<OrderTicket> orderTickets, String description) {
         this.user = user;
         this.orderTickets = orderTickets;
+        this.description = description;
     }
 
     public Long getId() {
