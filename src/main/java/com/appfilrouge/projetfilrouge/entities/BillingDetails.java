@@ -1,5 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class BillingDetails {
     private String cardCode;
     private String securityCode;
     private String cardDate;
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

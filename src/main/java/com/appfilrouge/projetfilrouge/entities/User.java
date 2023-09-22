@@ -1,5 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,13 +14,14 @@ public class User {
     private String mail;
     private String password;
     private String photo;
-
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Buyer buyer;
-
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Seller seller;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private BillingDetails billingDetails;
 

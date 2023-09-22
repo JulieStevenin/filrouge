@@ -24,6 +24,7 @@ public class Ad {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+
     public Ad() {
     }
 
@@ -37,6 +38,7 @@ public class Ad {
         this.tickets = tickets;
         this.seller = seller;
     }
+
 
     public Long getId() {
         return id;
