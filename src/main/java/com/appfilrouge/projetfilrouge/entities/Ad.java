@@ -14,7 +14,6 @@ public class Ad {
     private LocalDate eventDate;
     private boolean adminAdCheck;
     private String adminComment;
-    private boolean onlineAdStatus;
     private String category;
     private String city;
 
@@ -28,12 +27,11 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, boolean onlineAdStatus, String category, String city, List<Ticket> tickets, Seller seller) {
+    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, List<Ticket> tickets, Seller seller) {
         this.name = name;
         this.eventDate = eventDate;
         this.adminAdCheck = adminAdCheck;
         this.adminComment = adminComment;
-        this.onlineAdStatus = onlineAdStatus;
         this.category = category;
         this.city = city;
         this.tickets = tickets;
@@ -78,14 +76,6 @@ public class Ad {
 
     public void setAdminComment(String adminComment) {
         this.adminComment = adminComment;
-    }
-
-    public boolean isOnlineAdStatus() {
-        return onlineAdStatus;
-    }
-
-    public void setOnlineAdStatus(boolean onlineAdStatus) {
-        this.onlineAdStatus = onlineAdStatus;
     }
 
     public String getCategory() {
