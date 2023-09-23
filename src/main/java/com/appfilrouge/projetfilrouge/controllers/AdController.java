@@ -2,11 +2,13 @@ package com.appfilrouge.projetfilrouge.controllers;
 
 import com.appfilrouge.projetfilrouge.dto.AdDTO;
 
+import com.appfilrouge.projetfilrouge.dto.TicketDTO;
 import com.appfilrouge.projetfilrouge.entities.Ad;
 
 import com.appfilrouge.projetfilrouge.repositories.SellerRepository;
 import com.appfilrouge.projetfilrouge.services.AdService;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -33,6 +35,11 @@ public class AdController {
     @PostMapping("/new")
     public ResponseEntity<AdDTO> createAd(@RequestBody AdDTO adDTO) {
         AdDTO createdAd = adService.createAdd(adDTO);
+        return new ResponseEntity<>(createdAd, HttpStatus.CREATED);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<AdDTO> createAdWithTickets(@RequestBody AdDTO adDTO) {
+        AdDTO createdAd = adService.createAdWithTickets(adDTO);
         return new ResponseEntity<>(createdAd, HttpStatus.CREATED);
     }
 
@@ -73,5 +80,6 @@ public class AdController {
         List<Ad> ads = adService.findAdsByEventDate(eventDate);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
+
 }
 

@@ -1,7 +1,5 @@
 package com.appfilrouge.projetfilrouge.services;
 
-
-
 import com.appfilrouge.projetfilrouge.dto.AdDTO;
 import com.appfilrouge.projetfilrouge.dto.TicketDTO;
 import com.appfilrouge.projetfilrouge.entities.Ad;
@@ -37,20 +35,7 @@ public class AdService {
         Ad savedAd = adRepository.save(ad);
         return convertToDTO(savedAd);
     }
-   /* public Ad createAd(AdDTO adDTO) {
-        Ad ad = new Ad();
-        List<Ticket> tickets = new ArrayList<>();
-        for (TicketDTO ticketDTO : adDTO.getTickets()) {
-            Ticket ticket = new Ticket();
 
-            ticket.setAd(ad);
-            tickets.add(ticket);
-        }
-        ad.setTickets(tickets);
-
-
-        return adRepository.save(ad);
-    }*/
     @Transactional
     public AdDTO updateAd(Long id, AdDTO adDTO) {
         Optional<Ad> optionalAd = adRepository.findById(id);
@@ -69,21 +54,7 @@ public class AdService {
         }
     }
 
-  /*  @Transactional
-    public AdDTO addTicketToAd(Long id, TicketDTO ticketDTO) {
-        Optional<Ad> optionalAd = adRepository.findById(id);
 
-        if (optionalAd.isPresent()) {
-            Ad ad = optionalAd.get();
-            Ticket ticket = convertTicketDTOToEntity(ticketDTO);
-            ticket.setAd(ad);
-            ad.addTicket(ticket);
-            Ticket savedTicket = ticketRepository.save(ticket);
-            return convertToDTO(ad);
-        } else {
-            throw new EntityNotFoundException("Ad not found with id: " + id);
-        }
-    }*/
 
     public List<AdDTO> getAllAds() {
         List<Ad> ads = adRepository.findAll();
@@ -117,12 +88,59 @@ public class AdService {
     public boolean existsById(Long id) {
         return adRepository.existsById(id);
     }
+    @Transactional
+    public AdDTO createAdWithTickets(AdDTO adDTO) {
+        Ad ad = new Ad();
+        ad.setName(adDTO.getName());
+        ad.setEventDate(adDTO.getEventDate());
+        ad.setAdminAdCheck(adDTO.isAdminAdCheck());
+        ad.setAdminComment(adDTO.getAdminComment());
+        ad.setCategory(adDTO.getCategory());
+        ad.setCity(adDTO.getCity());
 
-    private AdDTO convertToDTO(Ad ad) {
+        List<Ticket> tickets = new ArrayList<>();
+        if (adDTO.getTickets() != null) {
+            adDTO.getTickets().forEach(ticketDTO -> {
+                Ticket ticket = new Ticket();
+                ticket.setDescription(ticketDTO.getDescription());
+                ticket.setTicketStatus(ticketDTO.isTicketStatus());
+                ticket.setPrice(ticketDTO.getPrice());
+                ticket.setAd(ad);
+                tickets.add(ticket);
+            });
+        }
+
+        ad.setTickets(tickets);
+        Ad savedAd = adRepository.save(ad);
+        return convertToDTO(savedAd);
+    }
+
+    private Ticket convertToTicketEntity(TicketDTO ticketDTO) {
+        Ticket ticket = new Ticket();
+        ticket.setDescription(ticketDTO.getDescription());
+        ticket.setPrice(ticketDTO.getPrice());
+
+        if (ticketDTO.getAdId() != null) {
+            Optional<Ad> optionalAd = adRepository.findById(ticketDTO.getAdId());
+            if (optionalAd.isPresent()) {
+                Ad ad = optionalAd.get();
+                ticket.setAd(ad);
+            } else {
+                throw new EntityNotFoundException("Ad not found with ID: " + ticketDTO.getAdId());
+            }
+        }
+
+        return ticket;
+    }
+
+
+private AdDTO convertToDTO(Ad ad) {
         AdDTO adDTO = new AdDTO();
         adDTO.setId(ad.getId());
         adDTO.setName(ad.getName());
-
+        //adDTO.setTickets(ad.getTickets());
+        adDTO.setCategory(ad.getCategory());
+        adDTO.setCategory(ad.getCity());
         adDTO.setEventDate(ad.getEventDate());
         adDTO.setAdminAdCheck(ad.isAdminAdCheck());
         adDTO.setAdminComment(ad.getAdminComment());

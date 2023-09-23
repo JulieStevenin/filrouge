@@ -2,8 +2,10 @@ package com.appfilrouge.projetfilrouge.services;
 
 import com.appfilrouge.projetfilrouge.dto.TicketDTO;
 import com.appfilrouge.projetfilrouge.entities.Ad;
+import com.appfilrouge.projetfilrouge.entities.OrderTicket;
 import com.appfilrouge.projetfilrouge.entities.Ticket;
 import com.appfilrouge.projetfilrouge.repositories.AdRepository;
+import com.appfilrouge.projetfilrouge.repositories.OrderRepository;
 import com.appfilrouge.projetfilrouge.repositories.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class TicketService {
     TicketRepository ticketRepository;
     @Autowired
     AdRepository adRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     public TicketDTO createTicket(TicketDTO ticketDTO) {
         Ticket ticket = convertToEntity(ticketDTO);
@@ -83,6 +87,27 @@ public class TicketService {
         ticket.setTicketStatus(ticketDTO.isTicketStatus());
         ticket.setPrice(ticketDTO.getPrice());
 
+        if (ticketDTO.getOrderTicketId() != null) {
+            // Rechercher l'OrderTicket correspondant dans la base de données
+            Optional<OrderTicket> optionalOrderTicket = orderRepository.findById(ticketDTO.getOrderTicketId());
+            if (optionalOrderTicket.isPresent()) {
+                ticket.setOrderTicket(optionalOrderTicket.get());
+            } else {
+                // Gérer l'erreur si l'OrderTicket n'est pas trouvé
+                throw new EntityNotFoundException("OrderTicket not found with id: " + ticketDTO.getOrderTicketId());
+            }
+        }
+
+        if (ticketDTO.getAdId() != null) {
+            // Rechercher l'Ad correspondant dans la base de données
+            Optional<Ad> optionalAd = adRepository.findById(ticketDTO.getAdId());
+            if (optionalAd.isPresent()) {
+                ticket.setAd(optionalAd.get());
+            } else {
+                // Gérer l'erreur si l'Ad n'est pas trouvé
+                throw new EntityNotFoundException("Ad not found with id: " + ticketDTO.getAdId());
+            }
+        }
 
         return ticket;
     }
