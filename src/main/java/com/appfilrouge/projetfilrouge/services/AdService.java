@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,8 @@ public class AdService {
         ad.setAdminComment(adDTO.getAdminComment());
         ad.setCategory(adDTO.getCategory());
         ad.setCity(adDTO.getCity());
+        ad.setTicketQuantity(adDTO.getTicketQuantity());
+
 
         List<Ticket> tickets = new ArrayList<>();
         if (adDTO.getTickets() != null) {
@@ -105,12 +108,22 @@ public class AdService {
                 ticket.setDescription(ticketDTO.getDescription());
                 ticket.setTicketStatus(ticketDTO.isTicketStatus());
                 ticket.setPrice(ticketDTO.getPrice());
+                int ticketQuantity = adDTO.getTicketQuantity();
+
                 ticket.setAd(ad);
                 tickets.add(ticket);
+
             });
         }
 
         ad.setTickets(tickets);
+        /*int totalTicketCount = tickets.size();
+        Float totalPrice = tickets.stream()
+                .map(Ticket::getPrice)
+                .reduce(0.0f, Float::sum);
+
+        adDTO.setTicketQuantity(totalTicketCount);
+        adDTO.setTotalPrice(totalPrice);*/
         Ad savedAd = adRepository.save(ad);
         return convertToDTO(savedAd);
     }
@@ -144,6 +157,7 @@ private AdDTO convertToDTO(Ad ad) {
         adDTO.setEventDate(ad.getEventDate());
         adDTO.setAdminAdCheck(ad.isAdminAdCheck());
         adDTO.setAdminComment(ad.getAdminComment());
+    adDTO.setAdminComment(ad.getAdminComment());
         if (ad.getSeller() != null) {
             adDTO.setSellerId(ad.getSeller().getId());
         }
@@ -186,6 +200,16 @@ private AdDTO convertToDTO(Ad ad) {
    public List<Ad> findAdsByEventDate(LocalDate eventDate) {
        return adRepository.findAdsByEventDate(eventDate);
    }
+    public List<AdDTO> searchAdsByKeyword(String keyword) {
+        List<Ad> matchingAds = adRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword);
+
+        return matchingAds.stream()
+                .map(this::convertToDTO) // Convertissez les annonces en DTO
+                .collect(Collectors.toList());
+    }
+    public List<Ad> searchAdsByKeywords(String keyword) {
+        return adRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword);
+    }
 
 }
 

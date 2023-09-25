@@ -86,6 +86,16 @@ public class AdController {
         AdDTO adDTO = adService.getAdById(id);
         return ResponseEntity.ok(adDTO);
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<AdDTO>> searchAdsByKeyword(@RequestParam("keyword") String keyword) {
+        List<AdDTO> matchingAds = adService.searchAdsByKeyword(keyword);
+        return ResponseEntity.ok(matchingAds);
+    }
 
+
+    @GetMapping("/searchs")
+    public List<Ad> searchAds(@RequestParam String keyword) {
+        return adService.searchAdsByKeywords(keyword);
+    }
 }
 

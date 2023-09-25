@@ -18,7 +18,7 @@ public class Ad {
     private String adminComment;
     private String category;
     private String city;
-
+   private int ticketQuantity;
     @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets =new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, List<Ticket> tickets, Seller seller) {
+    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, List<Ticket> tickets, Seller seller, int ticketQuantity) {
         this.name = name;
         this.eventDate = eventDate;
         this.adminAdCheck = adminAdCheck;
@@ -39,6 +39,7 @@ public class Ad {
         this.city = city;
         this.tickets = tickets;
         this.seller = seller;
+        this.ticketQuantity=ticketQuantity;
     }
 
 
@@ -96,6 +97,14 @@ public class Ad {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getTicketQuantity() {
+        return ticketQuantity;
+    }
+
+    public void setTicketQuantity(int ticketQuantity) {
+        this.ticketQuantity = ticketQuantity;
     }
 
     public List<Ticket> getTickets() {
