@@ -165,9 +165,32 @@ private AdDTO convertToDTO(Ad ad) {
         return adRepository.findByNameContaining(name);
 
     }
-    public List<Ad> findAdsByEventDate(LocalDate eventDate) {
+   /* public List<Ad> findAdsByEventDate(LocalDate eventDate) {
         return adRepository.findAdByEventDate(eventDate);
+    }*/
+
+    public AdDTO getAdById(Long id) {
+        Ad ad = adRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Annonce non trouvée"));
+
+
+        AdDTO adDTO = new AdDTO();
+        adDTO.setId(ad.getId());
+        adDTO.setCategory(ad.getCategory());
+        adDTO.setName(ad.getName());
+        adDTO.setCity(ad.getCity());
+        adDTO.setEventDate(ad.getEventDate());
+
+
+        return adDTO;
     }
+   /* public List<Ad> getAnnoncesByDateRange(LocalDate startDate, LocalDate endDate) {
+        return adRepository.findAnnoncesByEventDateBetween(startDate, endDate);
+    }*/
+   public List<Ad> findAdsByEventDate(LocalDate eventDate) {
+       return adRepository.findAdsByEventDate(eventDate);
+   }
+
 }
 
 

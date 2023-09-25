@@ -75,10 +75,16 @@ public class AdController {
         List<Ad> ads = adService.findAdsByName(name);
         return new ResponseEntity<>(ads, HttpStatus.OK);
     }
+
     @GetMapping("/byEventDate")
-    public ResponseEntity<List<Ad>> getAdsByEventDate(@RequestParam("eventDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate eventDate) {
+    public ResponseEntity<List<Ad>> getAdsByEventDate(@RequestParam("eventDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate eventDate) {
         List<Ad> ads = adService.findAdsByEventDate(eventDate);
         return new ResponseEntity<>(ads, HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<AdDTO> getAdById(@PathVariable Long id) {
+        AdDTO adDTO = adService.getAdById(id);
+        return ResponseEntity.ok(adDTO);
     }
 
 }

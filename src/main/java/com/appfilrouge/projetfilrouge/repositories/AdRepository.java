@@ -10,12 +10,13 @@ import java.util.List;
 
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
-    List<Ad> findAdByEventDate(LocalDate eventDate);
+
 
     List<Ad> findByNameContaining(String name);
 
     List<Ad> findAdsByTicketsIsNotEmptyAndAdminAdCheckTrue();
-
+    List<Ad> findAnnoncesByEventDateBetween(LocalDate startDate, LocalDate endDate);
+    List<Ad> findAdsByEventDate(LocalDate eventDate);
 
 
 }
