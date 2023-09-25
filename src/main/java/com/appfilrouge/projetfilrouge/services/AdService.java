@@ -80,8 +80,8 @@ public class AdService {
         ad.setEventDate(adDTO.getEventDate());
         ad.setAdminAdCheck(adDTO.isAdminAdCheck());
         ad.setAdminComment(adDTO.getAdminComment());
-
-
+        ad.setCategory(adDTO.getCategory());
+        ad.setCity(adDTO.getCity());
         return ad;
     }
 
@@ -140,7 +140,7 @@ private AdDTO convertToDTO(Ad ad) {
         adDTO.setName(ad.getName());
         //adDTO.setTickets(ad.getTickets());
         adDTO.setCategory(ad.getCategory());
-        adDTO.setCategory(ad.getCity());
+        adDTO.setCity(ad.getCity());
         adDTO.setEventDate(ad.getEventDate());
         adDTO.setAdminAdCheck(ad.isAdminAdCheck());
         adDTO.setAdminComment(ad.getAdminComment());
@@ -165,9 +165,7 @@ private AdDTO convertToDTO(Ad ad) {
         return adRepository.findByNameContaining(name);
 
     }
-   /* public List<Ad> findAdsByEventDate(LocalDate eventDate) {
-        return adRepository.findAdByEventDate(eventDate);
-    }*/
+
 
     public AdDTO getAdById(Long id) {
         Ad ad = adRepository.findById(id)
@@ -184,9 +182,7 @@ private AdDTO convertToDTO(Ad ad) {
 
         return adDTO;
     }
-   /* public List<Ad> getAnnoncesByDateRange(LocalDate startDate, LocalDate endDate) {
-        return adRepository.findAnnoncesByEventDateBetween(startDate, endDate);
-    }*/
+
    public List<Ad> findAdsByEventDate(LocalDate eventDate) {
        return adRepository.findAdsByEventDate(eventDate);
    }
