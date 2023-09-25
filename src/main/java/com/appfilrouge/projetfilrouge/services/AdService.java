@@ -200,16 +200,6 @@ private AdDTO convertToDTO(Ad ad) {
    public List<Ad> findAdsByEventDate(LocalDate eventDate) {
        return adRepository.findAdsByEventDate(eventDate);
    }
-    public List<AdDTO> searchAdsByKeyword(String keyword) {
-        List<Ad> matchingAds = adRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword);
-
-        return matchingAds.stream()
-                .map(this::convertToDTO) // Convertissez les annonces en DTO
-                .collect(Collectors.toList());
-    }
-    public List<Ad> searchAdsByKeywords(String keyword) {
-        return adRepository.findByTitleContainingOrDescriptionContaining(keyword, keyword);
-    }
 
 }
 

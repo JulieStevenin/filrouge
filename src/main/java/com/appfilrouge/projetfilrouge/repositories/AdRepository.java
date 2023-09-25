@@ -13,12 +13,9 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 
 
     List<Ad> findByNameContaining(String name);
-
-    List<Ad> findAdsByTicketsIsNotEmptyAndAdminAdCheckTrue();
-    List<Ad> findAnnoncesByEventDateBetween(LocalDate startDate, LocalDate endDate);
     List<Ad> findAdsByEventDate(LocalDate eventDate);
-    List<Ad> findAdsBy(LocalDate eventDate);
-    List<Ad> findByTitleContainingOrDescriptionContaining(String titleKeyword, String descriptionKeyword);
+
+
 
 
 }
