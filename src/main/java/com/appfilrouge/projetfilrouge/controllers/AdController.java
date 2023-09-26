@@ -18,7 +18,7 @@ public class AdController {
     @Autowired
     AdService adservice;
 
-    @PostMapping("/createdAd")
+    @PostMapping("/git ")
     public void createAd(@RequestBody Ad newAd, @AuthenticationPrincipal UserDetails userDetails) {
         adservice.createAd(newAd,userDetails);
     }
