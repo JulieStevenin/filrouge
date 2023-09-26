@@ -33,6 +33,10 @@ public class UserService {
         return user;
     }
 
+    public User findUserByMail(String mail){
+      return   usercrud.findByMail(mail);
+    }
+
     public List<User> getAllUser() {
         return usercrud.findAll();
     }

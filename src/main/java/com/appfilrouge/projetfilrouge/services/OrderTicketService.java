@@ -43,7 +43,7 @@ public class OrderTicketService {
             orderRepository.save(orderTicket);
             return orderTicket;
         }
-        //Passer dans url l'id du ticket. Je récupère le ticket à travers cet id.
+
 
     public boolean validateOrder(Long Id, User user, String cardCode, String securityCode, String cardDate) {
         OrderTicket order = orderRepository.findById(Id).orElse(null);
