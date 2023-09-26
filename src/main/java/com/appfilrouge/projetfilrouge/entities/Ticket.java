@@ -1,5 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,7 +14,7 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "orderTicket_id")
     private OrderTicket orderTicket;
-
+    @JsonBackReference(value ="lien1")
     @ManyToOne
     @JoinColumn(name = "ad_id")
     private Ad ad;

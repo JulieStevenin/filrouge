@@ -2,26 +2,34 @@ package com.appfilrouge.projetfilrouge.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fname;
     private String lname;
+
+    @Column(unique=true)
     private String mail;
     private String password;
     private String photo;
-    @JsonManagedReference
+    @JsonManagedReference(value = "buyer")
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Buyer buyer;
-    @JsonManagedReference
+    @JsonManagedReference(value = "seller")
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Seller seller;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="user")
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private BillingDetails billingDetails;
 
@@ -38,6 +46,9 @@ public class User {
         this.seller = seller;
         this.billingDetails = billingDetails;
     }
+
+
+
 
     public Long getId() {
         return id;
@@ -71,8 +82,38 @@ public class User {
         this.mail = mail;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return mail;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

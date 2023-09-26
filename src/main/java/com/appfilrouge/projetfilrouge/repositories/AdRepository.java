@@ -7,9 +7,6 @@ import java.util.List;
 
 public interface AdRepository extends JpaRepository<Ad, Long> {
 
-    //Visiteurs
-    List<Ad> findAdsByTicketsIsNotEmptyAndAdminAdCheckTrue();
 
-    //Users
 
 }
