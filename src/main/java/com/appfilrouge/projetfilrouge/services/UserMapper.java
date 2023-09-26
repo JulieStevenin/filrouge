@@ -3,7 +3,9 @@ package com.appfilrouge.projetfilrouge.services;
 import com.appfilrouge.projetfilrouge.dto.UserDTO;
 import com.appfilrouge.projetfilrouge.entities.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin("*")
 @Service
 public class UserMapper {
 

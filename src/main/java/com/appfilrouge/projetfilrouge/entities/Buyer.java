@@ -10,6 +10,10 @@ public class Buyer {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String lname;
+
+    private String fname;
     @JsonBackReference(value = "buyer")
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -39,7 +43,9 @@ public class Buyer {
     public Buyer() {
     }
 
-    public Buyer(User user, List<OrderTicket> orderTickets, String description) {
+    public Buyer(String lname, String fname, User user, List<OrderTicket> orderTickets, String description) {
+        this.lname = lname;
+        this.fname = fname;
         this.user = user;
         this.orderTickets = orderTickets;
         this.description = description;
@@ -53,19 +59,27 @@ public class Buyer {
         this.id = id;
     }
 
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<OrderTicket> getOrders() {
-        return orderTickets;
-    }
-
-    public void setOrders(List<OrderTicket> orderTickets) {
-        this.orderTickets = orderTickets;
     }
 }

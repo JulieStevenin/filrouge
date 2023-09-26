@@ -47,7 +47,8 @@ public class User implements UserDetails {
         this.billingDetails = billingDetails;
     }
 
-
+    public User(String username) {
+    }
 
 
     public Long getId() {

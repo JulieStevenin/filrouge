@@ -8,15 +8,15 @@ import com.appfilrouge.projetfilrouge.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -34,7 +34,6 @@ public class UserController {
     JwtUtils jwtUtils;
 
 
-
     @PostMapping("/register")
     public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
         User user = userMapper.convertToEntity(userDTO);
@@ -49,4 +48,19 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUser();
     }
+
+    @GetMapping(value = "/{userid}")
+    public User userFindById(@PathVariable Long userid) {
+        return userService.findUserById(userid);
+    }
+
+    @GetMapping("/data")
+    public User getUserDataTkn() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findUserByMail(username);
+        return user;
+    }
+
 }

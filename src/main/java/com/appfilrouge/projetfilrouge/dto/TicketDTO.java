@@ -21,6 +21,7 @@ public class TicketDTO {
         this.adId = adId;
     }
 
+
     public TicketDTO() {
     }
 

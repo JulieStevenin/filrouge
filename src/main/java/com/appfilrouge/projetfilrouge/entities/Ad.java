@@ -31,10 +31,13 @@ public class Ad {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    private String lname;
+    private String fname;
+
     public Ad() {
     }
 
-    public Ad(String name, String photo, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, int ticketQuantity, List<Ticket> tickets, Seller seller) {
+    public Ad(String name, String photo, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, int ticketQuantity, List<Ticket> tickets, Seller seller, String lname, String fname) {
         this.name = name;
         this.photo = photo;
         this.eventDate = eventDate;
@@ -45,6 +48,8 @@ public class Ad {
         this.ticketQuantity = ticketQuantity;
         this.tickets = tickets;
         this.seller = seller;
+        this.lname = lname;
+        this.fname = fname;
     }
 
     public Long getId() {
@@ -133,5 +138,21 @@ public class Ad {
 
     public void setSeller(Seller seller) {
         this.seller = seller;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 }

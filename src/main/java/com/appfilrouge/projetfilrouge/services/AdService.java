@@ -36,12 +36,13 @@ public class AdService {
         Seller seller = user.getSeller();
 
         ad.setName(adRequest.getName());
+        ad.setFname(user.getFname());
+        ad.setLname(user.getLname());
         ad.setCategory(adRequest.getCategory());
         ad.setCity(adRequest.getCity());
         ad.setEventDate(adRequest.getEventDate());
         ad.setPhoto(adRequest.getPhoto());
         ad.setSeller(seller);
-        ad.getSeller().setUser(user);
         List<Ticket> tickets = new ArrayList<>();
         for (Ticket ticketRequest : adRequest.getTickets()) {
             Ticket ticket = new Ticket();
@@ -66,4 +67,6 @@ public class AdService {
     public List<Ad> getAll() {
         return adRepository.findAll();
     }
+
+    public User findbySellerId(Long id){return adRepository.findBySellerId(id);}
 }

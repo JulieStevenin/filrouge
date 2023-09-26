@@ -41,6 +41,6 @@ public class UserService {
         return usercrud.findAll();
     }
 
-
+    public User findUserById(Long id){return usercrud.findUserById(id);}
 
 }

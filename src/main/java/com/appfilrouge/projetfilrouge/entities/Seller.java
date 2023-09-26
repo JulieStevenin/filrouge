@@ -13,7 +13,9 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String lname;
 
+    private String fname;
     @JsonBackReference(value = "seller")
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -28,9 +30,12 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(User user, List<Ad> ads) {
+    public Seller(String lname, String fname, User user, List<Ad> ads, String description) {
+        this.lname = lname;
+        this.fname = fname;
         this.user = user;
         this.ads = ads;
+        this.description = description;
     }
 
     public Long getId() {
@@ -39,6 +44,22 @@ public class Seller {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
     public User getUser() {
@@ -55,5 +76,13 @@ public class Seller {
 
     public void setAds(List<Ad> ads) {
         this.ads = ads;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
