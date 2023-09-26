@@ -31,7 +31,7 @@ public class OrderTicketController {
     }
 
     // Endpoint pour créer une commande de tickets
-    @PostMapping("/creation")
+    @PostMapping("/creationorder")
     public ResponseEntity<OrderTicket> createOrder(@RequestBody OrderTicket orderTicket) {
         OrderTicket createdOrder = orderTicketService.createOrder(orderTicket);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
