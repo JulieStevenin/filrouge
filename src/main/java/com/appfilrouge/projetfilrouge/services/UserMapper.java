@@ -14,7 +14,10 @@ public class UserMapper {
                 user.getLname(),
                 user.getMail(),
                 user.getPhoto(),
-                user.getPassword()
+                user.getPassword(),
+                user.getBuyer(),
+                user.getSeller()
+
         );
     }
 
@@ -26,6 +29,8 @@ public class UserMapper {
         user.setMail(userDTO.getMail());
         user.setPhoto(userDTO.getPhoto());
         user.setPassword(userDTO.getPassword());
+        user.setBuyer(userDTO.getBuyer());
+        user.setSeller(userDTO.getSeller());
         return user;
     }
 }

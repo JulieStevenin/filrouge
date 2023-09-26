@@ -10,7 +10,7 @@ public class Buyer {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonBackReference
+    @JsonBackReference(value = "buyer")
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -18,7 +18,7 @@ public class Buyer {
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     private List<OrderTicket> orderTickets;
 
-    private String description;
+    private String description="par defaut";
 
     public List<OrderTicket> getOrderTickets() {
         return orderTickets;

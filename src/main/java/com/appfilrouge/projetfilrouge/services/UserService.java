@@ -1,5 +1,7 @@
 package com.appfilrouge.projetfilrouge.services;
 
+import com.appfilrouge.projetfilrouge.entities.Buyer;
+import com.appfilrouge.projetfilrouge.entities.Seller;
 import com.appfilrouge.projetfilrouge.entities.User;
 import com.appfilrouge.projetfilrouge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,20 @@ public class UserService {
     }
 
     public User addUserWithBuyerSeller(User user) {
-        User adduser = new User(user.getFname(), user.getLname(), user.getMail(), user.getPassword(), user.getPhoto(), user.getBuyer(), user.getSeller(), user.getBillingDetails());
+        Buyer newBuyer = new Buyer();
+        newBuyer.setUser(user);
+        user.setBuyer(newBuyer);
+        Seller newSeller = new Seller();
+        newSeller.setUser(user);
+        user.setSeller(newSeller);
         usercrud.save(user);
-        return adduser;
+        return user;
     }
 
     public List<User> getAllUser() {
         return usercrud.findAll();
     }
+
+
+
 }

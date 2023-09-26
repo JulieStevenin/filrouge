@@ -1,19 +1,29 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 public class Seller {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @JsonBackReference(value = "seller")
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @JsonManagedReference(value="lien2")
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Ad> ads;
+
+    private String description="par defaut";
+
 
     public Seller() {
     }

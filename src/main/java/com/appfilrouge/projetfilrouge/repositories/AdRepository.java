@@ -12,6 +12,7 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 
 
 
+
     List<Ad> findByNameContaining(String name);
     List<Ad> findAdsByEventDate(LocalDate eventDate);
 

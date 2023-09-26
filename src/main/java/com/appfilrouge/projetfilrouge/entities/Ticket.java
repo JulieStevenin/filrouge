@@ -4,10 +4,9 @@ package com.appfilrouge.projetfilrouge.entities;
 import com.fasterxml.jackson.annotation.*;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Entity
@@ -19,13 +18,14 @@ public class Ticket {
     private boolean ticketStatus;
     private Float price;
 
-   @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "orderTicket_id")
-     @JsonIgnore
+    @JsonIgnore
     private OrderTicket orderTicket;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-   // @JsonIgnore
+
+    @JsonBackReference(value = "lien1")
+    @ManyToOne
     @JoinColumn(name = "ad_id")
     private Ad ad;
 

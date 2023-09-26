@@ -1,5 +1,7 @@
 package com.appfilrouge.projetfilrouge.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
@@ -13,16 +15,18 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String photo;
     private LocalDate eventDate;
     private boolean adminAdCheck;
     private String adminComment;
     private String category;
     private String city;
    private int ticketQuantity;
-    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticket> tickets =new ArrayList<>();
 
-
+    @JsonManagedReference(value="lien1")
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
+    @JsonBackReference(value="lien2")
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private Seller seller;
@@ -30,18 +34,18 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(String name, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, List<Ticket> tickets, Seller seller, int ticketQuantity) {
+    public Ad(String name, String photo, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, int ticketQuantity, List<Ticket> tickets, Seller seller) {
         this.name = name;
+        this.photo = photo;
         this.eventDate = eventDate;
         this.adminAdCheck = adminAdCheck;
         this.adminComment = adminComment;
         this.category = category;
         this.city = city;
+        this.ticketQuantity = ticketQuantity;
         this.tickets = tickets;
         this.seller = seller;
-        this.ticketQuantity=ticketQuantity;
     }
-
 
     public Long getId() {
         return id;
@@ -57,6 +61,14 @@ public class Ad {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public LocalDate getEventDate() {

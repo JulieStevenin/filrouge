@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin(origins = "*")
+
 @RestController
 @RequestMapping("/order")
 public class OrderTicketController {
@@ -31,7 +31,7 @@ public class OrderTicketController {
     }
 
     // Endpoint pour créer une commande de tickets
-    @PostMapping("/creationorder")
+    @PostMapping("/creation")
     public ResponseEntity<OrderTicket> createOrder(@RequestBody OrderTicket orderTicket) {
         OrderTicket createdOrder = orderTicketService.createOrder(orderTicket);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
