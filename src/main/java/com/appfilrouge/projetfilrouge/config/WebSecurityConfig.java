@@ -63,7 +63,9 @@ public class WebSecurityConfig {
                     .requestMatchers("/ad/all").permitAll()
                     .requestMatchers("/ad/createdAd").permitAll()
                     .requestMatchers("/ad/{userid}").permitAll()
+                    .requestMatchers("/ad/{adId}").permitAll()
                     .requestMatchers("/user/data").permitAll()
+                    //.requestMatchers("/ad/user/{mail}").permitAll()
                     .anyRequest().authenticated();
         });
 

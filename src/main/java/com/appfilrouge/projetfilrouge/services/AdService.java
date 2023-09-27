@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AdService {
@@ -47,7 +49,7 @@ public class AdService {
         ad.setPhoto(adRequest.getPhoto());
         ad.setMail(user.getMail());
         ad.setSeller(seller);
-git 
+
         OrderTicket orderTicket = new OrderTicket();
         orderTicket.setSeller(seller);
         orderTicket.setTotalPrice(0F);
@@ -90,5 +92,33 @@ git
 
     public List<Ad> findAdByMail(String mail) {
         return adRepository.findAdsByMail(mail);
+    }
+    public Ad updateAd(Long adId, Ad updatedAd) {
+        Ad existingAd = adRepository.findById(adId).orElse(null);
+
+        if (existingAd == null) {
+            return null;
+        }
+
+
+        existingAd.setName(updatedAd.getName());
+        existingAd.setCategory(updatedAd.getCategory());
+        existingAd.setCity(updatedAd.getCity());
+        existingAd.setEventDate(updatedAd.getEventDate());
+        existingAd.setPhoto(updatedAd.getPhoto());
+        existingAd.setTickets(updatedAd.getTickets());
+        existingAd.setSeller(updatedAd.getSeller());
+
+
+        return adRepository.save(existingAd);
+    }
+    public void deleteAd(Long adId) {
+        Optional<Ad> existingAd = adRepository.findById(adId);
+
+        if (existingAd.isPresent()) {
+            adRepository.delete(existingAd.get());
+        } else {
+            throw new NoSuchElementException("Ad not found with id: " + adId);
+        }
     }
 }
