@@ -11,7 +11,7 @@ public class BillingDetails {
     private String cardCode;
     private String securityCode;
     private String cardDate;
-    @JsonBackReference(value="user")
+    @JsonBackReference(value = "user")
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;

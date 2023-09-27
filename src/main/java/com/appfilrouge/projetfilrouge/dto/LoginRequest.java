@@ -3,7 +3,6 @@ package com.appfilrouge.projetfilrouge.dto;
 public class LoginRequest {
 
     private  String mail;
-
     private  String password;
 
     public LoginRequest() {

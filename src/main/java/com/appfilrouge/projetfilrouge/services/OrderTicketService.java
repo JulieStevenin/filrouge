@@ -9,7 +9,6 @@ import com.appfilrouge.projetfilrouge.repositories.OrderRepository;
 import com.appfilrouge.projetfilrouge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -81,7 +80,6 @@ public class OrderTicketService {
         return true;
     }
 
-    // Les trois booléens suivants permettent de valider ou non les saisies des codes bancaires de l'utilisateur :
     private boolean isValidCardCode(String cardCode) {
         return cardCode != null && cardCode.matches("\\d{16}");
     }
@@ -97,14 +95,12 @@ public class OrderTicketService {
     public Map<String, Object> createInvoice(OrderTicket orderTicket) {
         Map<String, Object> purchaseInvoice = new HashMap<>();
 
-        // Extrayez les informations de la commande
         List<Ticket> tickets = orderTicket.getTickets();
         Float totalPrice = orderTicket.getTotalPrice();
         User buyer = orderTicket.getBuyer().getUser();
         User seller = orderTicket.getSeller().getUser();
         LocalDate orderDate = orderTicket.getOrderDate();
 
-        // Créez la liste des détails des billets
         List<Map<String, Object>> ticketDetails = new ArrayList<>();
         for (Ticket ticket : tickets) {
             Map<String, Object> ticketDetail = new HashMap<>();
@@ -113,7 +109,6 @@ public class OrderTicketService {
             ticketDetails.add(ticketDetail);
         }
 
-        // Ajoutez toutes les informations à la carte de facturation
         purchaseInvoice.put("tickets", ticketDetails);
         purchaseInvoice.put("totalPrice", totalPrice);
         purchaseInvoice.put("buyerName", buyer.getFname() + " " + buyer.getLname());

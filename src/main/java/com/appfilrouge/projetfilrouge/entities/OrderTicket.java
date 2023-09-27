@@ -1,7 +1,6 @@
 package com.appfilrouge.projetfilrouge.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.List;
 

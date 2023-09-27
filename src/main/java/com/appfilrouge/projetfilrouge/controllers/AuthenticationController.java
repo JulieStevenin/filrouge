@@ -2,7 +2,6 @@ package com.appfilrouge.projetfilrouge.controllers;
 
 import com.appfilrouge.projetfilrouge.dto.LoginRequest;
 import com.appfilrouge.projetfilrouge.services.JwtUtils;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

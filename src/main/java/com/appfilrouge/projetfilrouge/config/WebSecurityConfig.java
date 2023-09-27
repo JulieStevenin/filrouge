@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 
 @Configuration
@@ -32,19 +31,15 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
-
         http.cors(new Customizer<CorsConfigurer<HttpSecurity>>() {
-                    @Override
-                    public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
-                        httpSecurityCorsConfigurer.disable();
-                    }
-                });
-
+            @Override
+            public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
+                httpSecurityCorsConfigurer.disable();
+            }
+        });
 
         http.csrf(new Customizer<CsrfConfigurer<HttpSecurity>>() {
             @Override
@@ -62,17 +57,16 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth").permitAll()
                     .requestMatchers("/ad/all").permitAll()
                     .requestMatchers("/ad/createdAd").permitAll()
-                    .requestMatchers("/ad/{userid}").permitAll()
                     .requestMatchers("/ad/{adId}").permitAll()
-                    .requestMatchers("/user/data").permitAll()
                     .requestMatchers("tickets/byad/{adId}").permitAll()
-                    .requestMatchers("/order/seller/{sellerId}").permitAll()
                     .requestMatchers("/tickets/{id}").permitAll()
                     .requestMatchers(("/ad")).permitAll()
                     .requestMatchers(("/order/{id}")).permitAll()
                     .requestMatchers(("/order/byticket/{ticketId}")).permitAll()
                     .requestMatchers(("/order/validatesimple/{id}")).permitAll()
                     .requestMatchers(("ad/all/false/{bool}")).permitAll()
+                    .requestMatchers("/ad/{adId}").permitAll()
+                    .requestMatchers("/tickets/{id}").permitAll()
                     .anyRequest().authenticated();
         });
 

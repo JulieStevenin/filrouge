@@ -20,11 +20,11 @@ public class Seller {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @JsonManagedReference(value="lien2")
+    @JsonManagedReference(value = "lien2")
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Ad> ads;
 
-    private String description="par defaut";
+    private String description = "par defaut";
 
 
     public Seller() {

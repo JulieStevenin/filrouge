@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class AdService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Ad> findAdsByOrderTicketsValidatedisFalse(Boolean bool){
-      return   adRepository.findAdsByOrderTicketsValidatedIsFalse(bool);
+    public List<Ad> findAdsByOrderTicketsValidatedisFalse(Boolean bool) {
+        return adRepository.findAdsByOrderTicketsValidatedIsFalse(bool);
     }
 
     public Ad createAd(Ad adRequest, UserDetails userDetails) {
@@ -58,7 +59,7 @@ public class AdService {
         orderRepository.save(orderTicket);
 
         List<Ticket> tickets = new ArrayList<>();
-        Float totalPrice=0F;
+        Float totalPrice = 0F;
 
         for (Ticket ticketRequest : adRequest.getTickets()) {
             Ticket ticket = new Ticket();
@@ -87,7 +88,6 @@ public class AdService {
         return ad;
     }
 
-
     public List<Ad> getAll() {
         return adRepository.findAll();
     }
@@ -100,7 +100,21 @@ public class AdService {
         return adRepository.findAdsByMail(mail);
     }
 
-    public Ad findAdById (Long id){
-      return adRepository.findAdById(id);
+
+    public Ad findAdById(Long id) {
+        return adRepository.findAdById(id);
+    }
+
+    public List<Ad> searchAds(String name, LocalDate eventDate) {
+        return adRepository.findByNameContainingOrEventDate(name, eventDate);
+    }
+
+    public List<Ad> searchAdsByName(String name) {
+        return adRepository.findByNameContaining(name);
+    }
+
+    public List<Ad> searchAdsByDate(LocalDate eventDate) {
+        return adRepository.findAdsByEventDate(eventDate);
+
     }
 }

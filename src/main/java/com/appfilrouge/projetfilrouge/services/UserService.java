@@ -7,16 +7,13 @@ import com.appfilrouge.projetfilrouge.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @Service
 public class UserService {
 
-
     @Autowired
     private final UserRepository usercrud;
-
 
     public UserService(UserRepository usercrud) {
         this.usercrud = usercrud;
@@ -33,14 +30,16 @@ public class UserService {
         return user;
     }
 
-    public User findUserByMail(String mail){
-      return   usercrud.findByMail(mail);
+    public User findUserByMail(String mail) {
+        return usercrud.findByMail(mail);
     }
 
     public List<User> getAllUser() {
         return usercrud.findAll();
     }
 
-    public User findUserById(Long id){return usercrud.findUserById(id);}
+    public User findUserById(Long id) {
+        return usercrud.findUserById(id);
+    }
 
 }

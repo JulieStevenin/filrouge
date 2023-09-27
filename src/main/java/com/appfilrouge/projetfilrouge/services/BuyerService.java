@@ -1,11 +1,9 @@
 package com.appfilrouge.projetfilrouge.services;
 
 import com.appfilrouge.projetfilrouge.entities.Buyer;
-import com.appfilrouge.projetfilrouge.entities.OrderTicket;
 import com.appfilrouge.projetfilrouge.repositories.BuyerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -18,7 +16,6 @@ public class BuyerService {
         this.buyerRepository = buyerRepository;
     }
 
-
     public Buyer getBuyerById(Long id) {
         Optional<Buyer> optionalBuyer = buyerRepository.findById(id);
         if (optionalBuyer.isPresent()) {
@@ -27,6 +24,7 @@ public class BuyerService {
             return null;
         }
     }
+
     public Buyer createBuyer(Buyer buyer) {
         return buyerRepository.save(buyer);
     }

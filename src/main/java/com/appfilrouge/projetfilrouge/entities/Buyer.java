@@ -8,7 +8,7 @@ import java.util.List;
 public class Buyer {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String lname;
@@ -22,7 +22,7 @@ public class Buyer {
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     private List<OrderTicket> orderTickets;
 
-    private String description="par defaut";
+    private String description = "par defaut";
 
     public List<OrderTicket> getOrderTickets() {
         return orderTickets;

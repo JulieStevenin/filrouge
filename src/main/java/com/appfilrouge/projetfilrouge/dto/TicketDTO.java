@@ -1,8 +1,6 @@
 package com.appfilrouge.projetfilrouge.dto;
 
 
-import com.appfilrouge.projetfilrouge.entities.Ad;
-
 public class TicketDTO {
     private Long id;
     private String description;

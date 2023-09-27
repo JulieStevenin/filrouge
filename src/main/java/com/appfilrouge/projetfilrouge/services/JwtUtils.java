@@ -10,7 +10,6 @@ import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -22,7 +21,6 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${jwt.utils.expiration.duration}")
     private long expirationMs;
-
 
 
     public String generateJwtToken(Authentication authentication) {
@@ -66,7 +64,4 @@ public class JwtUtils {
                 .getBody()
                 .getSubject();
     }
-
-
-
 }

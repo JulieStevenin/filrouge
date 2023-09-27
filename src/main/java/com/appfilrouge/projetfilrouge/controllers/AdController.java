@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -16,36 +17,44 @@ import java.util.List;
 public class AdController {
 
     @Autowired
-    AdService adservice;
+    AdService adService;
 
     @PostMapping("/createdAd")
     public void createAd(@RequestBody Ad newAd, @AuthenticationPrincipal UserDetails userDetails) {
-        adservice.createAd(newAd, userDetails);
+        adService.createAd(newAd, userDetails);
     }
 
     @GetMapping("/all/false/{bool}")
     public List<Ad> findAdsByOrderTicketsValidatedisFalse(@PathVariable boolean bool){
-     return    adservice.findAdsByOrderTicketsValidatedisFalse(bool);
-    }
+     return    adService.findAdsByOrderTicketsValidatedisFalse(bool);
+     }
 
     @GetMapping("/all")
     public List<Ad> getAll() {
-        return adservice.getAll();
+        return adService.getAll();
     }
-
 
     @GetMapping("user/{mail}")
     public List<Ad> findAdByMail(@PathVariable String mail) {
-        return adservice.findAdByMail(mail);
+        return adService.findAdByMail(mail);
     }
 
     @GetMapping("/{adId}")
     public Ad findAdById(@PathVariable Long adId){
-        return adservice.findAdById(adId);
+        return adService.findAdById(adId);
     }
 
+    @GetMapping("/search")
+    public List<Ad> searchAds(@RequestParam(required = false) String name,
+                              @RequestParam(required = false) String date) {
+        if (name != null && date != null && !date.trim().isEmpty()) {
+            return adService.searchAds(name, LocalDate.parse(date));
+        } else if (name != null) {
+            return adService.searchAdsByName(name);
+        } else if (date != null) {
+            return adService.searchAdsByDate(LocalDate.parse(date));
+        } else {
+            throw new IllegalArgumentException("Au moins un critère de recherche (name ou date) doit être fourni.");
+        }
+    }
 }
-
-
-
-
