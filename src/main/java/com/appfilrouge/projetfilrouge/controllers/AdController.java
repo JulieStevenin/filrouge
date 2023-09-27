@@ -28,9 +28,10 @@ public class AdController {
         return adservice.getAll();
     }
 
-    @GetMapping("/{userid}")
-    public void findBySellerId(@PathVariable Long userid){
-        adservice.findbySellerId(userid);
+
+    @GetMapping("user/{mail}")
+    public List<Ad> findAdByMail (@PathVariable String mail){
+       return adservice.findAdByMail(mail);
     }
 }
 

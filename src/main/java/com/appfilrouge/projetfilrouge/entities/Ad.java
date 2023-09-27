@@ -34,10 +34,12 @@ public class Ad {
     private String lname;
     private String fname;
 
+    private String mail;
+
     public Ad() {
     }
 
-    public Ad(String name, String photo, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, int ticketQuantity, List<Ticket> tickets, Seller seller, String lname, String fname) {
+    public Ad(String name, String photo, LocalDate eventDate, boolean adminAdCheck, String adminComment, String category, String city, int ticketQuantity, List<Ticket> tickets, Seller seller, String lname, String fname, String mail) {
         this.name = name;
         this.photo = photo;
         this.eventDate = eventDate;
@@ -50,6 +52,7 @@ public class Ad {
         this.seller = seller;
         this.lname = lname;
         this.fname = fname;
+        this.mail = mail;
     }
 
     public Long getId() {
@@ -154,5 +157,13 @@ public class Ad {
 
     public void setFname(String fname) {
         this.fname = fname;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
