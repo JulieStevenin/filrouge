@@ -47,7 +47,7 @@ public class AdService {
         ad.setPhoto(adRequest.getPhoto());
         ad.setMail(user.getMail());
         ad.setSeller(seller);
-
+git 
         OrderTicket orderTicket = new OrderTicket();
         orderTicket.setSeller(seller);
         orderTicket.setTotalPrice(0F);
