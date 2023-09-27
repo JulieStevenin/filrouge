@@ -63,7 +63,16 @@ public class WebSecurityConfig {
                     .requestMatchers("/ad/all").permitAll()
                     .requestMatchers("/ad/createdAd").permitAll()
                     .requestMatchers("/ad/{userid}").permitAll()
+                    .requestMatchers("/ad/{adId}").permitAll()
                     .requestMatchers("/user/data").permitAll()
+                    .requestMatchers("tickets/byad/{adId}").permitAll()
+                    .requestMatchers("/order/seller/{sellerId}").permitAll()
+                    .requestMatchers("/tickets/{id}").permitAll()
+                    .requestMatchers(("/ad")).permitAll()
+                    .requestMatchers(("/order/{id}")).permitAll()
+                    .requestMatchers(("/order/byticket/{ticketId}")).permitAll()
+                    .requestMatchers(("/order/validatesimple/{id}")).permitAll()
+                    .requestMatchers(("ad/all/false/{bool}")).permitAll()
                     .anyRequest().authenticated();
         });
 

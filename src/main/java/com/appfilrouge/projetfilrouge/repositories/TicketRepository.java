@@ -1,5 +1,6 @@
 package com.appfilrouge.projetfilrouge.repositories;
 
+import com.appfilrouge.projetfilrouge.entities.OrderTicket;
 import com.appfilrouge.projetfilrouge.entities.Ticket;
 import com.appfilrouge.projetfilrouge.entities.Ad;
 import org.springframework.data.jpa.repository.JpaRepository;

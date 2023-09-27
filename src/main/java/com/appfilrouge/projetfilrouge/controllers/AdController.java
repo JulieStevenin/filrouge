@@ -20,7 +20,12 @@ public class AdController {
 
     @PostMapping("/createdAd")
     public void createAd(@RequestBody Ad newAd, @AuthenticationPrincipal UserDetails userDetails) {
-        adservice.createAd(newAd,userDetails);
+        adservice.createAd(newAd, userDetails);
+    }
+
+    @GetMapping("/all/false/{bool}")
+    public List<Ad> findAdsByOrderTicketsValidatedisFalse(@PathVariable boolean bool){
+     return    adservice.findAdsByOrderTicketsValidatedisFalse(bool);
     }
 
     @GetMapping("/all")
@@ -30,9 +35,15 @@ public class AdController {
 
 
     @GetMapping("user/{mail}")
-    public List<Ad> findAdByMail (@PathVariable String mail){
-       return adservice.findAdByMail(mail);
+    public List<Ad> findAdByMail(@PathVariable String mail) {
+        return adservice.findAdByMail(mail);
     }
+
+    @GetMapping("/{adId}")
+    public Ad findAdById(@PathVariable Long adId){
+        return adservice.findAdById(adId);
+    }
+
 }
 
 

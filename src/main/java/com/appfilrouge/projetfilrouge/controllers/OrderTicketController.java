@@ -2,7 +2,6 @@ package com.appfilrouge.projetfilrouge.controllers;
 
 import com.appfilrouge.projetfilrouge.entities.OrderTicket;
 import com.appfilrouge.projetfilrouge.entities.User;
-import com.appfilrouge.projetfilrouge.repositories.OrderRepository;
 import com.appfilrouge.projetfilrouge.services.OrderTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/order")
@@ -20,13 +21,23 @@ public class OrderTicketController {
 
     // Endpoint pour récupérer une commande par ID
     @GetMapping("/{id}")
-    public ResponseEntity<OrderTicket> getOrderById(@PathVariable Long id) {
-        OrderTicket orderticket = orderTicketService.getOrderById(id);
-        if (orderticket != null) {
-            return ResponseEntity.ok(orderticket);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public Optional<OrderTicket> getOrderById(@PathVariable Long id) {
+       return orderTicketService.getOrderById(id);
+    }
+
+    @PostMapping("/validatesimple/{id}")
+    public void validateOrderSimple(@PathVariable Long id,@RequestBody String card) {
+        orderTicketService.validateOrderSimple(id, card);
+    }
+
+    @GetMapping("/byticket/{ticketId}")
+    public OrderTicket findOrderTicketsByTicketId(@PathVariable Long ticketId) {
+        return orderTicketService.findOrderTicketsByTicketId(ticketId);
+    }
+
+    @GetMapping("/seller/{sellerId}")
+    public OrderTicket findOrderbySellerId(@PathVariable Long sellerId) {
+        return orderTicketService.findOrderbySellerId(sellerId);
     }
 
     // Endpoint pour créer une commande de tickets
@@ -34,18 +45,6 @@ public class OrderTicketController {
     public ResponseEntity<OrderTicket> createOrder(@RequestBody OrderTicket orderTicket) {
         OrderTicket createdOrder = orderTicketService.createOrder(orderTicket);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
-    }
-
-    //Endpoint pour générer une facture pour une commande précise
-    @PostMapping("/{id}/creationinvoice")
-    public ResponseEntity<Map<String, Object>> createInvoice(@PathVariable Long id) {
-        OrderTicket orderTicket = orderTicketService.getOrderById(id); // Remplacez findById par la méthode appropriée pour récupérer l'OrderTicket par son ID
-        if (orderTicket == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Map<String, Object> invoice = orderTicketService.createInvoice(orderTicket);
-        return ResponseEntity.ok(invoice);
     }
 
     @PostMapping("/{id}/validation")

@@ -65,10 +65,12 @@ public class TicketController {
         }
     }
 
-    @GetMapping("/by-ad/{adId}")
+    @GetMapping("/byad/{adId}")
     public ResponseEntity<List<TicketDTO>> getTicketsByAd(@PathVariable Long adId) {
         List<TicketDTO> ticketsByAd = ticketService.getTicketsByAd(adId);
         return new ResponseEntity<>(ticketsByAd, HttpStatus.OK);
     }
+
+
 
 }

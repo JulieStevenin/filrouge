@@ -30,6 +30,9 @@ public class AdService {
     @Autowired
     private OrderRepository orderRepository;
 
+    public List<Ad> findAdsByOrderTicketsValidatedisFalse(Boolean bool){
+      return   adRepository.findAdsByOrderTicketsValidatedIsFalse(bool);
+    }
 
     public Ad createAd(Ad adRequest, UserDetails userDetails) {
         Ad ad = new Ad();
@@ -45,9 +48,10 @@ public class AdService {
         ad.setCity(adRequest.getCity());
         ad.setEventDate(adRequest.getEventDate());
         ad.setPhoto(adRequest.getPhoto());
+        ad.setTicketQuantity(adRequest.getTicketQuantity());
         ad.setMail(user.getMail());
         ad.setSeller(seller);
-git 
+
         OrderTicket orderTicket = new OrderTicket();
         orderTicket.setSeller(seller);
         orderTicket.setTotalPrice(0F);
@@ -58,13 +62,17 @@ git
 
         for (Ticket ticketRequest : adRequest.getTickets()) {
             Ticket ticket = new Ticket();
-            ticket.setPrice(ticketRequest.getPrice());
-            totalPrice += ticketRequest.getPrice();
+            Float price = ticketRequest.getPrice();
+            if (price != null) {
+                ticket.setPrice(price);
+                totalPrice += price;
+            }
             ticket.setDescription(ticketRequest.getDescription());
             ticket.setAd(ad);
             ticket.setOrderTicket(orderTicket);
             tickets.add(ticket);
         }
+
 
         orderTicket.setTotalPrice(totalPrice);
         orderRepository.save(orderTicket);
@@ -90,5 +98,9 @@ git
 
     public List<Ad> findAdByMail(String mail) {
         return adRepository.findAdsByMail(mail);
+    }
+
+    public Ad findAdById (Long id){
+      return adRepository.findAdById(id);
     }
 }

@@ -30,20 +30,35 @@ public class OrderTicketService {
     @Autowired
     private UserRepository userRepository;
 
-    public OrderTicket getOrderById(Long id) {
-        Optional<OrderTicket> optionalOrder = orderRepository.findById(id);
-        if (optionalOrder.isPresent()) {
-            return optionalOrder.get();
-        } else {
-            return null;
-        }
+    public Optional<OrderTicket> getOrderById(Long id) {
+        return orderRepository.findById(id);
+    }
+
+
+
+
+
+    public OrderTicket findOrderTicketsByTicketId(Long id) {
+        return orderRepository.findOrderTicketsByTicketId(id);
+    }
+
+    public OrderTicket findOrderbySellerId(Long id) {
+        return orderRepository.findOrderTicketBySellerId(id);
     }
 
     public OrderTicket createOrder(OrderTicket orderTicket) {
-            orderRepository.save(orderTicket);
-            return orderTicket;
-        }
+        orderRepository.save(orderTicket);
+        return orderTicket;
+    }
 
+
+    public void validateOrderSimple (Long id, String cardCode) {
+        if (!cardCode.isEmpty()) {
+            OrderTicket order = orderRepository.findById(id).orElse(null);
+           order.setValidated(true);
+           orderRepository.save(order);
+        }
+    }
 
     public boolean validateOrder(Long Id, User user, String cardCode, String securityCode, String cardDate) {
         OrderTicket order = orderRepository.findById(Id).orElse(null);
