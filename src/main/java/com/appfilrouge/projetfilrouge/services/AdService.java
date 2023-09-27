@@ -8,6 +8,8 @@ import com.appfilrouge.projetfilrouge.repositories.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +90,17 @@ public class AdService {
 
     public List<Ad> findAdByMail(String mail) {
         return adRepository.findAdsByMail(mail);
+    }
+
+    public List<Ad> searchAds(String name, LocalDate eventDate) {
+        return adRepository.findByNameContainingOrEventDate(name, eventDate);
+    }
+
+    public List<Ad> searchAdsByName(String name) {
+        return adRepository.findByNameContaining(name);
+    }
+
+    public List<Ad> searchAdsByDate(LocalDate eventDate) {
+        return adRepository.findAdsByEventDate(eventDate);
     }
 }
