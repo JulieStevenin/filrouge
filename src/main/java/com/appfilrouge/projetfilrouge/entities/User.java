@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +18,7 @@ public class User implements UserDetails {
     private String fname;
     private String lname;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String mail;
     private String password;
     private String photo;
@@ -34,7 +33,7 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Seller seller;
 
-    @JsonManagedReference(value="user")
+    @JsonManagedReference(value = "user")
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private BillingDetails billingDetails;
 
@@ -93,9 +92,9 @@ public class User implements UserDetails {
         //boucler sur notre liste de roles ci-dessus
         //créer une liste contenant plusieurs SimpleGrantedAuthority
         //retourner cette liste de SimplegrantedAuthority
-        Collection<GrantedAuthority> authorities= new ArrayList<>() ;
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (Role role: this.roleList) {
+        for (Role role : this.roleList) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
         return authorities;

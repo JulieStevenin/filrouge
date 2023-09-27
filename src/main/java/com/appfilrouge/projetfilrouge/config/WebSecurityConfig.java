@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 
 @Configuration
@@ -32,11 +31,8 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-
 
         http.cors(new Customizer<CorsConfigurer<HttpSecurity>>() {
             @Override
@@ -44,7 +40,6 @@ public class WebSecurityConfig {
                 httpSecurityCorsConfigurer.disable();
             }
         });
-
 
         http.csrf(new Customizer<CsrfConfigurer<HttpSecurity>>() {
             @Override

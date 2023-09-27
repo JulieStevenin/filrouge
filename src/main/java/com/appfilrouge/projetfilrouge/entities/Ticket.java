@@ -2,10 +2,7 @@ package com.appfilrouge.projetfilrouge.entities;
 
 
 import com.fasterxml.jackson.annotation.*;
-
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 
 
@@ -22,7 +19,6 @@ public class Ticket {
     @JoinColumn(name = "orderTicket_id")
     @JsonIgnore
     private OrderTicket orderTicket;
-
 
     @JsonBackReference(value = "lien1")
     @ManyToOne

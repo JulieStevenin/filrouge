@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin("*")
@@ -20,7 +19,7 @@ public class AdController {
 
     @PostMapping("/createdAd")
     public void createAd(@RequestBody Ad newAd, @AuthenticationPrincipal UserDetails userDetails) {
-        adservice.createAd(newAd,userDetails);
+        adservice.createAd(newAd, userDetails);
     }
 
     @GetMapping("/all")
@@ -28,13 +27,8 @@ public class AdController {
         return adservice.getAll();
     }
 
-
     @GetMapping("user/{mail}")
-    public List<Ad> findAdByMail (@PathVariable String mail){
-       return adservice.findAdByMail(mail);
+    public List<Ad> findAdByMail(@PathVariable String mail) {
+        return adservice.findAdByMail(mail);
     }
 }
-
-
-
-

@@ -16,8 +16,9 @@ public class ProjetFilRougeApplication implements CommandLineRunner {
         SpringApplication.run(ProjetFilRougeApplication.class, args);
     }
 
-@Autowired
-private RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public void run(String... args) throws Exception {
 

@@ -2,14 +2,13 @@ package com.appfilrouge.projetfilrouge.controllers;
 
 import com.appfilrouge.projetfilrouge.entities.OrderTicket;
 import com.appfilrouge.projetfilrouge.entities.User;
-import com.appfilrouge.projetfilrouge.repositories.OrderRepository;
 import com.appfilrouge.projetfilrouge.services.OrderTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/order")
@@ -18,7 +17,6 @@ public class OrderTicketController {
     @Autowired
     private OrderTicketService orderTicketService;
 
-    // Endpoint pour récupérer une commande par ID
     @GetMapping("/{id}")
     public ResponseEntity<OrderTicket> getOrderById(@PathVariable Long id) {
         OrderTicket orderticket = orderTicketService.getOrderById(id);
@@ -29,17 +27,16 @@ public class OrderTicketController {
         }
     }
 
-    // Endpoint pour créer une commande de tickets
     @PostMapping("/creationorder")
     public ResponseEntity<OrderTicket> createOrder(@RequestBody OrderTicket orderTicket) {
         OrderTicket createdOrder = orderTicketService.createOrder(orderTicket);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
-    //Endpoint pour générer une facture pour une commande précise
+
     @PostMapping("/{id}/creationinvoice")
     public ResponseEntity<Map<String, Object>> createInvoice(@PathVariable Long id) {
-        OrderTicket orderTicket = orderTicketService.getOrderById(id); // Remplacez findById par la méthode appropriée pour récupérer l'OrderTicket par son ID
+        OrderTicket orderTicket = orderTicketService.getOrderById(id);
         if (orderTicket == null) {
             return ResponseEntity.notFound().build();
         }
@@ -64,15 +61,8 @@ public class OrderTicketController {
             }
 
         } catch (IllegalArgumentException e) {
-            // Gérez les exceptions appropriées et renvoyez une réponse d'erreur
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
 }
-
-
-
-
-
-

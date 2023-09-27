@@ -1,11 +1,9 @@
 package com.appfilrouge.projetfilrouge.services;
 
-import com.appfilrouge.projetfilrouge.entities.Buyer;
 import com.appfilrouge.projetfilrouge.entities.Seller;
 import com.appfilrouge.projetfilrouge.repositories.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

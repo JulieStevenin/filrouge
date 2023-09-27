@@ -10,8 +10,6 @@ import com.appfilrouge.projetfilrouge.repositories.TicketRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,30 +86,25 @@ public class TicketService {
         ticket.setPrice(ticketDTO.getPrice());
 
         if (ticketDTO.getOrderTicketId() != null) {
-            // Rechercher l'OrderTicket correspondant dans la base de données
             Optional<OrderTicket> optionalOrderTicket = orderRepository.findById(ticketDTO.getOrderTicketId());
             if (optionalOrderTicket.isPresent()) {
                 ticket.setOrderTicket(optionalOrderTicket.get());
             } else {
-                // Gérer l'erreur si l'OrderTicket n'est pas trouvé
                 throw new EntityNotFoundException("OrderTicket not found with id: " + ticketDTO.getOrderTicketId());
             }
         }
 
         if (ticketDTO.getAdId() != null) {
-            // Rechercher l'Ad correspondant dans la base de données
             Optional<Ad> optionalAd = adRepository.findById(ticketDTO.getAdId());
             if (optionalAd.isPresent()) {
                 ticket.setAd(optionalAd.get());
             } else {
-                // Gérer l'erreur si l'Ad n'est pas trouvé
                 throw new EntityNotFoundException("Ad not found with id: " + ticketDTO.getAdId());
             }
         }
 
         return ticket;
     }
-
 
     private TicketDTO convertToDTO(Ticket ticket) {
         TicketDTO ticketDTO = new TicketDTO();
@@ -146,8 +139,4 @@ public class TicketService {
         adRepository.save(ad);
         ticketRepository.save(ticket);
     }
-
-
-
 }
-
