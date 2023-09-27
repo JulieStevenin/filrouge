@@ -64,6 +64,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/ad/{adId}").permitAll()
                     .requestMatchers("/tickets/{id}").permitAll()
                     .requestMatchers("/order/creationorder").permitAll()
+                    .requestMatchers("/order//{id}/validation").permitAll()
                     .anyRequest().authenticated();
         });
 
