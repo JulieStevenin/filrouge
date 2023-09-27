@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +23,10 @@ public class User implements UserDetails {
     private String mail;
     private String password;
     private String photo;
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Role> roleList;
+
     @JsonManagedReference(value = "buyer")
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
     private Buyer buyer;
@@ -85,7 +90,23 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        //boucler sur notre liste de roles ci-dessus
+        //créer une liste contenant plusieurs SimpleGrantedAuthority
+        //retourner cette liste de SimplegrantedAuthority
+        Collection<GrantedAuthority> authorities= new ArrayList<>() ;
+
+        for (Role role: this.roleList) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public String getPassword() {
