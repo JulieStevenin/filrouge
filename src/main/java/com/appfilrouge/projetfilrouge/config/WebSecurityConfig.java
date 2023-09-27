@@ -39,11 +39,11 @@ public class WebSecurityConfig {
 
 
         http.cors(new Customizer<CorsConfigurer<HttpSecurity>>() {
-                    @Override
-                    public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
-                        httpSecurityCorsConfigurer.disable();
-                    }
-                });
+            @Override
+            public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
+                httpSecurityCorsConfigurer.disable();
+            }
+        });
 
 
         http.csrf(new Customizer<CsrfConfigurer<HttpSecurity>>() {
@@ -64,6 +64,11 @@ public class WebSecurityConfig {
                     .requestMatchers("/ad/createdAd").permitAll()
                     .requestMatchers("/ad/{userid}").permitAll()
                     .requestMatchers("/user/data").permitAll()
+                    .requestMatchers("/ad/{adId}").permitAll()
+                    .requestMatchers("/tickets/{id}").permitAll()
+                    .requestMatchers("/order/creationorder").permitAll()
+                    .requestMatchers("/order//{id}/validation").permitAll()
+
                     .anyRequest().authenticated();
         });
 

@@ -30,7 +30,7 @@ public class OrderTicketController {
     }
 
     // Endpoint pour créer une commande de tickets
-    @PostMapping("/creation")
+    @PostMapping("/creationorder")
     public ResponseEntity<OrderTicket> createOrder(@RequestBody OrderTicket orderTicket) {
         OrderTicket createdOrder = orderTicketService.createOrder(orderTicket);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
@@ -58,10 +58,11 @@ public class OrderTicketController {
             boolean isValidated = orderTicketService.validateOrder(id, user, cardCode, securityCode, cardDate);
 
             if (isValidated) {
-                return ResponseEntity.ok("La commande a été validée avec succès.");
+                return ResponseEntity.ok("Paiement validé");
             } else {
-                return ResponseEntity.badRequest().body("Échec de la validation de la commande.");
+                return ResponseEntity.badRequest().body("Échec du paiement");
             }
+
         } catch (IllegalArgumentException e) {
             // Gérez les exceptions appropriées et renvoyez une réponse d'erreur
             return ResponseEntity.badRequest().body(e.getMessage());
