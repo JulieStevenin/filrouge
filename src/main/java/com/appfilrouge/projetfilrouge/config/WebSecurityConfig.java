@@ -67,6 +67,7 @@ public class WebSecurityConfig {
                     .requestMatchers(("ad/all/false/{bool}")).permitAll()
                     .requestMatchers("/ad/{adId}").permitAll()
                     .requestMatchers("/tickets/{id}").permitAll()
+                    .requestMatchers("/user/data").permitAll()
                     .anyRequest().authenticated();
         });
 
