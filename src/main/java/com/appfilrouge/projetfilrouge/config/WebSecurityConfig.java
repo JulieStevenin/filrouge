@@ -57,6 +57,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/auth").permitAll()
                     .requestMatchers("/ad/all").permitAll()
                     .requestMatchers("/ad/createdAd").permitAll()
+                    .requestMatchers("/ad/account/sell").permitAll()
                     .requestMatchers("/ad/{adId}").permitAll()
                     .requestMatchers("tickets/byad/{adId}").permitAll()
                     .requestMatchers("/tickets/{id}").permitAll()

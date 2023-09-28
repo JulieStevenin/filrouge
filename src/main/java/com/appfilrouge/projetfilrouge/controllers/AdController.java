@@ -24,6 +24,11 @@ public class AdController {
         adService.createAd(newAd, userDetails);
     }
 
+    @GetMapping("/account/sell")
+    public List<Ad> findAdsByMailAndOrderTicketsValidatedIsTrue(@AuthenticationPrincipal UserDetails userDetails){
+      return   adService.findAdsByMailAndOrderTicketsValidatedIsTrue(userDetails);
+    }
+
     @GetMapping("/all/false/{bool}")
     public List<Ad> findAdsByOrderTicketsValidatedisFalse(@PathVariable boolean bool){
      return    adService.findAdsByOrderTicketsValidatedisFalse(bool);

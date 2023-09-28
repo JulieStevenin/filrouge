@@ -9,19 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProjetFilRougeApplication implements CommandLineRunner {
-
+public class ProjetFilRougeApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(ProjetFilRougeApplication.class, args);
     }
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Override
-    public void run(String... args) throws Exception {
-
-        roleRepository.save(new Role("ROLE_USER"));
-    }
 }

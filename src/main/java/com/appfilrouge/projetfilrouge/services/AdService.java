@@ -35,6 +35,13 @@ public class AdService {
         return adRepository.findAdsByOrderTicketsValidatedIsFalse(bool);
     }
 
+    public List<Ad> findAdsByMailAndOrderTicketsValidatedIsTrue(UserDetails userDetails) {
+        User user = userService.findUserByMail(userDetails.getUsername());
+        Seller seller = user.getSeller();
+        Long id = seller.getId();
+        return adRepository.findAdsByMailAndOrderTicketsValidatedIsTrue(id);
+    }
+
     public Ad createAd(Ad adRequest, UserDetails userDetails) {
         Ad ad = new Ad();
 

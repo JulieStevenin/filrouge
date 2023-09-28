@@ -30,4 +30,10 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 
     List<Ad> findByNameContainingOrEventDate(String name, LocalDate eventDate);
 
+    @Query("SELECT ad FROM Ad ad WHERE ad.id IN (SELECT t.ad.id FROM Ticket t WHERE t.orderTicket.validated = true AND t.orderTicket.seller.id= :id)")
+    List<Ad> findAdsByMailAndOrderTicketsValidatedIsTrue(@Param("id") Long id);
+
+
+
+
 }
